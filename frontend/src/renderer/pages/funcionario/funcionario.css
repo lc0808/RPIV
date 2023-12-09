@@ -1,0 +1,184 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  background-color: #F5FAFF;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 0px;
+}
+
+.box {
+  background-color: grey;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+
+.box .create-area {
+  background-color: white;
+  height: 100%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box .create-area-content {
+  display: flex;
+  width: 70%;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+
+.create-area-content .title {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  margin-bottom: 1rem;
+  font-size: 40px;
+  margin-top: 4rem;
+}
+
+.error-msg {
+  font-family: 'Poppins', sans-serif;
+  color: #f87171;
+  background-color: #fef2f2;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  padding-left: 3px;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1.25em;
+
+}
+
+.input-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: medium;
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 10px;
+  outline: none;
+}
+
+.input-text:focus {
+  border-color: #7582f4;
+}
+
+.input-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  pointer-events: none;
+  transition: all 0.2s;
+  color: #000;
+  font-size: 14px;
+}
+
+.input-text:focus + .input-label {
+  top: -8px;
+  left: 7px;
+  font-size: 12px;
+  color: #7582f4;
+  background-color: #fff;
+  padding: 0 5px;
+  border-radius: 5px;
+}
+
+.input-text:valid + .input-label {
+  top: -8px;
+  left: 7px;
+  font-size: 12px;
+  color: #000;
+  background-color: #fff;
+  padding: 0 5px;
+  border-radius: 5px;
+}
+
+.background-area {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+  url(assets/backgroundCreateFuncionario.jpg);
+  height: 100%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.create-area .input-submit {
+  background-color: #7582f4;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
+  padding: 11px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.input-submit:active {
+  background-color: #5c66c1;
+}
+
+.div-content {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btns {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+
+.cancel-btn {
+  width: 100%;
+  background-color: #f87171;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
+  padding: 11px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn:active {
+  background-color: #c45959;
+}
+
+.cancel-btn2 {
+  width: 100%;
+  background-color: gray;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
+  padding: 11px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn2:active {
+  background-color: #4d4d4d;
+}

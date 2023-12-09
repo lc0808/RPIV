@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MuseuApplication<museu>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.museu.museu.MuseuApplication",
+            "projectName": "museu",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

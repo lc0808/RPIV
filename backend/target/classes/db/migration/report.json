@@ -1,0 +1,34 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": "3",
+      "targetSchemaVersion": null,
+      "schemaName": "banco",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.22.1",
+      "database": "banco",
+      "warnings": [],
+      "timestamp": "2023-10-03T10:42:40.420711100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "3",
+      "targetSchemaVersion": null,
+      "schemaName": "banco",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.22.1",
+      "database": "banco",
+      "warnings": [],
+      "timestamp": "2023-10-03T10:49:57.926233500",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}
