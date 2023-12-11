@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import TopBar from '../../components/TopBar';
 import { api } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -14,11 +14,11 @@ export default function ListarSecao() {
     // Faz uma chamada para a API para obter dados de funcionários
     api
       .get('/secao')
-      .then((response) => {
+      .then((response: { data: SetStateAction<{ content: Secao[]; }>; }) => {
         // Atualiza o estado com os dados recebidos da API
         setData(response.data);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('Erro ao buscar dados:', error);
       });
   }, []);
