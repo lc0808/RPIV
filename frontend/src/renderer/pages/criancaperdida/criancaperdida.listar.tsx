@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ListComponent from '../../components/List';
 import Button from '../../components/Button';
 
-export default function ListarSecao() {
+export default function ListarCrianca() {
   const [data, setData] = useState<{ content: CriancaPerdida[] }>({ content: [] });
 
   const navegar = useNavigate();
