@@ -11,7 +11,7 @@ type TipoCriancaPerdida = {
   divisaoId: string;
 };
 
-export default function CadastrarSecao() {
+export default function CadastrarCriancaPerdida() {
   const navegar = useNavigate();
 
   const [criancaPerdida, setcriancaPerdida] = useState<TipoCriancaPerdida>({
