@@ -24,6 +24,11 @@ import CadastrarViagemPesquisador from './pages/funcionario/funcionario.viagempe
 import ListarEmprestimosPecas from './pages/peca/peca.emprestimo.listar';
 import CadastrarEmprestimo from './pages/peca/peca.emprestimo.emprestar';
 import DevolverPeca from './pages/peca/peca.emprestimo.devolver';
+import ListarInspecao from './pages/inspecao/inspecao.listar';
+import CadastrarInspecao from './pages/inspecao/inspecao.cadastrar';
+import EditarDivisao from './pages/divisao/divisao.editar';
+import EditarPeca from './pages/peca/peca.editar';
+import AutorizacaoDesativacao from './pages/alarme/alarme';
 
 export default function App() {
   return (
@@ -44,11 +49,15 @@ export default function App() {
           />
           <Route path="/divisao" element={<ListarDivisao />} />
           <Route path="/divisao/cadastrar" element={<CadastrarDivisao />} />
+          <Route path="/divisao/:id/editar" element={<EditarDivisao />} />
           <Route path="/secao" element={<ListarSecao />} />
           <Route path="/secao/cadastrar" element={<CadastrarSecao />} />
           <Route path="/secao/:id/editar" element={<EditarSecao />} />
           <Route path="/pecas" element={<ListarPecas />} />
           <Route path="/pecas/cadastrar" element={<CadastrarPeca />} />
+          <Route path="/pecas/:id/editar" element={<EditarPeca />} />
+          <Route path="/inspecao" element={<ListarInspecao />} />
+          <Route path="/inspecao/cadastrar" element={<CadastrarInspecao />} />
           <Route path="/emprestimopecas" element={<ListarEmprestimosPecas />} />
           <Route path="/emprestimopecas/devolver/:id" element={<DevolverPeca />} />
           <Route path="/emprestimopecas/emprestar" element={<CadastrarEmprestimo />} />
@@ -60,6 +69,7 @@ export default function App() {
             path="/viagenspesquisador/cadastrar"
             element={<CadastrarViagemPesquisador />}
           />
+          <Route path="/autorizacao-desativacao" element={<AutorizacaoDesativacao />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Router>

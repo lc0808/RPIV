@@ -31,9 +31,9 @@ function PecaComponent({ peca, opcaoBtn, emprestimo }: PecaComponentProps) {
         <div className="funcionario-content">
           <div className="info-funcionario">
             <div className="name-funcionario">{peca.nome}</div>
-            <div className="div-dados"><strong>Descrição:</strong> {peca.descricao}</div>
+            <div className="div-dados"><strong>Descrição: </strong> {peca.descricao}</div>
             <div className="div-dados">
-              <span><strong>Autor:</strong> {peca.autor}</span>
+              <span> <strong>Autor:</strong> {peca.autor}</span>
             </div>
             <div className="div-dados">
               <span><strong>Curador:</strong> {peca.curador}</span>

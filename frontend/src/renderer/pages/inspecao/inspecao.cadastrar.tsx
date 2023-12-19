@@ -5,24 +5,24 @@ import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../../api/api';
 
-type TipoCriancaPerdida = {
-  nome: string;
+type TipoInspecao = {
+  id: string;
+  titulo: string;
   descricao: string;
-  divisaoId: string;
 };
 
-export default function CadastrarCriancaPerdida() {
+export default function CadastrarInspecao() {
   const navegar = useNavigate();
 
-  const [criancaPerdida, setcriancaPerdida] = useState<TipoCriancaPerdida>({
-    nome: '',
+  const [inspecao, setInspecao] = useState<TipoInspecao>({
+    id: '',
+    titulo: '',
     descricao: '',
-    divisaoId: '',
   });
 
-  const handleChange = (fieldName: keyof TipoCriancaPerdida, value: string) => {
-    setCriancaPerdida((criancaPerdida) => ({
-      ...prevCriancaPerdida,
+  const handleChange = (fieldName: keyof TipoInspecao, value: string) => {
+    setInspecao((prevInspecao) => ({
+      ...prevInspecao,
       [fieldName]: value,
     }));
   };
@@ -43,7 +43,7 @@ export default function CadastrarCriancaPerdida() {
           'Todos os dados preenchidos foram descartados.',
           'success',
         );
-        navegar('/criancaperdida');
+        navegar('/inspecao');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
@@ -53,13 +53,13 @@ export default function CadastrarCriancaPerdida() {
     e.preventDefault();
 
     await api
-      .post('/criancaperdida/nova', criancaPerdida)
-      .then((data: any) => {
-        navegar('/criancaperdida');
-        toast.success('Criança perdida cadastrada com sucesso!');
+      .post('/inspecao/nova', inspecao)
+      .then((data) => {
+        navegar('/inspecao');
+        toast.success('Inspeção cadastrada com sucesso!');
       })
-      .catch((err: any) => {
-        toast.error('Criança perdida já existente ou campos inválidos!');
+      .catch((err) => {
+        toast.error('Inspeção já existente ou campos inválidos!');
       });
   }
 
@@ -71,45 +71,32 @@ export default function CadastrarCriancaPerdida() {
         <div className="box">
           <div className="create-area">
             <div className="create-area-content">
-              <h1 className="title">Cadastrar Seção</h1>
+              <h1 className="title">Cadastrar Inspeção</h1>
               <div id="msg"></div>
               <div className="input-container">
                 <input
                   type="text"
                   className="input-text"
                   name="nome"
-                  value={crianca.nome}
-                  onChange={(e) => handleChange('nome', e.target.value)}
+                  value={inspecao.titulo}
+                  onChange={(e) => handleChange('titulo', e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="input-label">
-                  Nome Criança
+                  Titulo da Inspeção
                 </label>
               </div>
               <div className="input-container">
                 <input
                   type="text"
                   className="input-text"
-                  name="descricao"
-                  value={crianca.descricao}
+                  name="predio"
+                  value={inspecao.descricao}
                   onChange={(e) => handleChange('descricao', e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="input-label">
                   Descrição
-                </label>
-              </div>
-              <div className="input-container">
-                <input
-                  type="text"
-                  className="input-text"
-                  name="divisaoId"
-                  value={crianca.local}
-                  onChange={(e) => handleChange('divisaoId', e.target.value)}
-                  required
-                />
-                <label htmlFor="name" className="input-label">
-                  Local
                 </label>
               </div>
 

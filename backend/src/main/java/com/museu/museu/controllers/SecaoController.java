@@ -103,27 +103,28 @@ public class SecaoController {
 
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosSecao> editarSecao(@PathVariable Integer id, @RequestBody EditarSecao cadastroSecao) {
-
-        var secao = secaoRepository.findById(id);
-
-        if (secao.isPresent()) {
-            var secaoEditada = secao.get();
-
+    
+        var secaoOptional = secaoRepository.findById(id);
+    
+        if (secaoOptional.isPresent()) {
+            var secaoEditada = secaoOptional.get();
+    
             secaoEditada.setNome(cadastroSecao.nome());
             secaoEditada.setDescricao(cadastroSecao.descricao());
-
+    
             secaoRepository.save(secaoEditada);
-            System.out.println(secaoEditada);
-
+            
+            cache.put("secao" + id, secaoEditada);
+    
             return ResponseEntity.ok(new DadosSecao(secaoEditada));
         }
-
+    
         return ResponseEntity.notFound().build();
-
     }
+    
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletarSecao(@PathVariable Integer id) {

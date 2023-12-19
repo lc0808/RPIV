@@ -26,6 +26,7 @@ import com.museu.museu.domain.EmprestarPeca;
 import com.museu.museu.domain.Peca;
 import com.museu.museu.dto.DadosListagemPeca;
 import com.museu.museu.dto.DadosPeca;
+import com.museu.museu.dto.EditarPeca;
 import com.museu.museu.dto.NovaPeca;
 import com.museu.museu.repositories.PecaRepository;
 import com.museu.museu.repositories.SecaoRepository;
@@ -115,6 +116,28 @@ public class PecaController {
         Optional<Peca> peca = pecaRepository.findById(id);
 
         return ResponseEntity.ok(new DadosPeca(peca.get()));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<DadosPeca> atualizarPeca(@PathVariable Integer id, @Valid @RequestBody EditarPeca novaPeca) {
+        try {
+            Peca peca = pecaRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Peca not found with id: " + id));
+
+            peca.setNome(novaPeca.nome());
+            peca.setAutor(novaPeca.autor());
+            peca.setCurador(novaPeca.curador());
+            peca.setDescricao_peca(novaPeca.descricao_peca());
+            peca.setEstado_conservacao(novaPeca.estado_conservacao());
+
+            Peca pecaAtualizada = pecaRepository.save(peca);
+
+            return ResponseEntity.ok(new DadosPeca(pecaAtualizada));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
   @PutMapping("/emprestar/{id}")

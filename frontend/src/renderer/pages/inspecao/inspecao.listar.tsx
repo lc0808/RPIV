@@ -2,21 +2,19 @@ import TopBar from '../../components/TopBar';
 import { useEffect, useState } from 'react';
 import { api } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
-import ListComponent from '../../components/List';
 import Button from '../../components/Button';
-import DivisaoComponent from '../../components/DivisaoComponent';
+import InspecaoComponent from '../../components/InspecaoComponent';
 
-export default function ListarDivisao() {
-  const [data, setData] = useState<{ content: Divisao[] }>({ content: [] });
+export default function ListarInspecao() {
+  const [data, setData] = useState<Inspecao[]>([]); // Alterado para um array diretamente
 
   const navegar = useNavigate();
 
   useEffect(() => {
-    // Faz uma chamada para a API para obter dados de funcionários
     api
-      .get('/divisao')
+      .get('/inspecao')
       .then((response) => {
-        // Atualiza o estado com os dados recebidos da API
+        console.log('Dados da API:', response.data);
         setData(response.data);
       })
       .catch((error) => {
@@ -25,23 +23,24 @@ export default function ListarDivisao() {
   }, []);
 
   const handleCadastrar = () => {
-    navegar('/divisao/cadastrar');
+    navegar('/inspecao/cadastrar');
   };
+
   return (
     <div>
       <TopBar />
 
       <div className="div-btn">
         <Button
-          children="Adicionar Divisão"
+          children="Adicionar Inspeção"
           className="btn-adc-funcionario"
           onClick={handleCadastrar}
         />
       </div>
 
       <div id="funcionarios" className="list-funcionarios">
-        {data.content.map((divisao, index) => (
-          <DivisaoComponent key={index} divisao={divisao} />
+        {data.map((inspecao, index) => (
+          <InspecaoComponent key={index} inspecao={inspecao} />
         ))}
       </div>
     </div>

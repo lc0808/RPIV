@@ -65,3 +65,9 @@ interface Divisao {
   predio: String;
   sala: String;
 }
+
+interface Inspecao {
+  id: String;
+  titulo: String;
+  descricao: String;
+}

@@ -12,7 +12,7 @@ const setup = () => {
    * Interceptador de erros.
    */
   api.interceptors.response.use(
-    (response) => response,
+    (response: any) => response,
     (error: AxiosError) => {
       if (error.response?.status === 500) {
         console.log('Internal Server Error');

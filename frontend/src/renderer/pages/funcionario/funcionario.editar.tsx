@@ -399,7 +399,7 @@ export default function EditarFuncionario() {
                   onClick={handleInativar}
                   defaultChecked
                 >
-                  Inativar
+                  {funcionario.demitido ? 'Ativar':'Inativar'}
                 </button>
 
                 <input

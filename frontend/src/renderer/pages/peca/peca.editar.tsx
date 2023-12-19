@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2';
 import TopBar from '../../components/TopBar';
-import { useNavigate } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FormEvent, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../../api/api';
 
@@ -9,23 +9,20 @@ type TipoPeca = {
   nome: string;
   autor: string;
   curador: string;
-  data_adquirida: string;
   descricao_peca: string;
   estado_conservacao: string;
-  secao: string;
 };
 
-export default function CadastrarPeca() {
+export default function EditarPeca() {
   const navegar = useNavigate();
+  const { id } = useParams();
 
   const [peca, setPeca] = useState<TipoPeca>({
     nome: '',
     autor: '',
     curador: '',
-    data_adquirida: '',
     descricao_peca: '',
     estado_conservacao: '',
-    secao: '',
   });
 
   const handleChange = (fieldName: keyof TipoPeca, value: string) => {
@@ -47,47 +44,59 @@ export default function CadastrarPeca() {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          'Cadastro cancelado',
-          'Todos os dados preenchidos foram descartados.',
+          'Edição cancelada',
+          'Todos os dados preenchidos foram descartidos.',
           'success',
         );
         navegar('/pecas');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
   };
 
-  async function handleCadastro(e: FormEvent) {
+  async function handleEditar(e: FormEvent) {
     e.preventDefault();
 
-    // Ajuste o formato da data antes de enviar para a API
-    const dataAdquirida = new Date(peca.data_adquirida);
-    const formattedData =
-      dataAdquirida.toISOString().split('T')[0] + // Formato YYYY-MM-DD
-      ` ${dataAdquirida.toTimeString().split(' ')[0]}.${dataAdquirida.getMilliseconds().toString().padStart(6, '0')}`;
-
-    const dataParaEnviar = { ...peca, data_adquirida: formattedData };
-
     await api
-      .post('/pecas/criar', dataParaEnviar)
-      .then((data) => {
-        navegar('/pecas');
-        toast.success('Peça cadastrada com sucesso!');
+      .put(`/pecas/${id}`, {
+        ...peca,
+        // Não inclua os campos indesejados no objeto enviado à API
       })
-      .catch((err) => {
-        toast.error('Peça já existente ou campos inválidos!');
+      .then(() => {
+        navegar('/pecas');
+        toast.success('Peça editada com sucesso!');
+      })
+      .catch(() => {
+        toast.error('Peça com campos inválidos!');
       });
   }
+
+  useEffect(() => {
+    api
+      .get(`/pecas/d/${id}`)
+      .then((response) => {
+        const { data_adquirida, ...rest } = response.data;
+        const formattedData = new Date(data_adquirida).toLocaleDateString('pt-BR');
+
+        setPeca((prevPeca) => ({
+          ...prevPeca,
+          ...rest,
+          data_adquirida: formattedData,
+        }));
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar dados:', error);
+      });
+  }, [id]);
 
   return (
     <div>
       <TopBar />
 
-      <form onSubmit={(e) => handleCadastro(e)}>
+      <form onSubmit={(e) => handleEditar(e)}>
         <div className="box">
           <div className="create-area">
             <div className="create-area-content">
-              <h1 className="title">Cadastrar Peça</h1>
+              <h1 className="title">Editar Peça</h1>
               <div id="msg"></div>
               <div className="input-container">
                 <input
@@ -146,19 +155,6 @@ export default function CadastrarPeca() {
                     Estado de Conservação
                   </label>
                 </div>
-                <div className="input-container">
-                  <input
-                    type="text"
-                    className="input-text"
-                    name="secao"
-                    value={peca.secao}
-                    onChange={(e) => handleChange('secao', e.target.value)}
-                    required
-                  />
-                  <label htmlFor="name" className="input-label">
-                    Seção
-                  </label>
-                </div>
               </div>
               <div className="input-container">
                 <input
@@ -176,22 +172,6 @@ export default function CadastrarPeca() {
                 </label>
               </div>
 
-              <div className="input-container">
-                <input
-                  type="date"
-                  className="input-text"
-                  name="data_adquirida"
-                  value={peca.data_adquirida}
-                  onChange={(e) => {
-                    const data = e.target.value;
-
-                    handleChange('data_adquirida', data);
-                  }}
-                  required
-                />
-                <label htmlFor="data_adquirida" className="input-label"></label>
-              </div>
-
               <div className="btns">
                 <button
                   type="button"
@@ -207,7 +187,7 @@ export default function CadastrarPeca() {
                   type="submit"
                   className="input-submit"
                   id="submit"
-                  value="Cadastrar"
+                  value="Salvar"
                 />
               </div>
             </div>

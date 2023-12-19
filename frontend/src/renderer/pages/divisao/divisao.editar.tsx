@@ -1,28 +1,29 @@
 import Swal from 'sweetalert2';
 import TopBar from '../../components/TopBar';
-import { useNavigate } from 'react-router-dom';
-import { FormEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FormEvent, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { api } from '../../api/api';
 
-type TipoExposicao = {
+type TipoDivisao = {
   nome: string;
-  descricao: string;
-  local: string;
+  predio: string;
+  sala: string;
 };
 
-export default function CadastrarExposicao() {
+export default function EditarDivisao() {
   const navegar = useNavigate();
+  const { id } = useParams();
 
-  const [exposicao, setExposicao] = useState<TipoExposicao>({
+  const [divisao, setDivisao] = useState<TipoDivisao>({
     nome: '',
-    descricao: '',
-    local: '',
+    predio: '',
+    sala: '',
   });
 
-  const handleChange = (fieldName: keyof TipoExposicao, value: string) => {
-    setExposicao((exposicao) => ({
-      ...exposicao,
+  const handleChange = (fieldName: keyof TipoDivisao, value: string) => {
+    setDivisao((prevDivisao) => ({
+      ...prevDivisao,
       [fieldName]: value,
     }));
   };
@@ -40,76 +41,89 @@ export default function CadastrarExposicao() {
       if (result.isConfirmed) {
         Swal.fire(
           'Cadastro cancelado',
-          'Todos os dados preenchidos foram descartados.',
+          'Todos os dados preenchidos foram descartidos.',
           'success',
         );
-        navegar('/exposicao');
+        navegar('/divisao');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
       }
     });
   };
 
-  async function handleCadastro(e: FormEvent) {
+  async function handleEditar(e: FormEvent) {
     e.preventDefault();
 
     await api
-      .post('/exposicao/nova', exposicao)
-      .then((data: any) => {
-        navegar('/exposicao');
-        toast.success('Criança perdida cadastrada com sucesso!');
+      .put(`/divisao/${id}`, divisao)
+      .then((data) => {
+        navegar('/divisao');
+        toast.success('Divisão editada com sucesso!');
       })
-      .catch((err: any) => {
-        toast.error('Criança perdida já existente ou campos inválidos!');
+      .catch((err) => {
+        toast.error('Divisão com campos inválidos!');
       });
   }
+
+  useEffect(() => {
+    // Faz uma chamada para a API para obter dados da divisão
+    api
+      .get(`/divisao/${id}`)
+      .then((response) => {
+        // Atualiza o estado com os dados recebidos da API
+        setDivisao(response.data);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar dados:', error);
+      });
+  }, [id]);
 
   return (
     <div>
       <TopBar />
 
-      <form onSubmit={(e) => handleCadastro(e)}>
+      <form onSubmit={(e) => handleEditar(e)}>
         <div className="box">
           <div className="create-area">
             <div className="create-area-content">
-              <h1 className="title">Cadastrar Seção</h1>
+              <h1 className="title">Editar Divisão</h1>
               <div id="msg"></div>
               <div className="input-container">
                 <input
                   type="text"
                   className="input-text"
                   name="nome"
-                  value={exposicao.nome}
+                  value={divisao.nome}
                   onChange={(e) => handleChange('nome', e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="input-label">
-                  Nome Exposicao
+                  Nome Divisão
                 </label>
               </div>
               <div className="input-container">
                 <input
                   type="text"
                   className="input-text"
-                  name="descricao"
-                  value={exposicao.descricao}
-                  onChange={(e) => handleChange('descricao', e.target.value)}
+                  name="predio"
+                  value={divisao.predio}
+                  onChange={(e) => handleChange('predio', e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="input-label">
-                  Descrição
+                  Prédio
                 </label>
               </div>
               <div className="input-container">
                 <input
                   type="text"
                   className="input-text"
-                  name="local"
-                  value={exposicao.local}
-                  onChange={(e) => handleChange('local', e.target.value)}
+                  name="sala"
+                  value={divisao.sala}
+                  onChange={(e) => handleChange('sala', e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="input-label">
-                  Local
+                  Sala
                 </label>
               </div>
 
@@ -128,7 +142,7 @@ export default function CadastrarExposicao() {
                   type="submit"
                   className="input-submit"
                   id="submit"
-                  value="Cadastrar"
+                  value="Salvar"
                 />
               </div>
             </div>
